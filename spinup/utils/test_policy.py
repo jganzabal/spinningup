@@ -6,6 +6,8 @@ import tensorflow as tf
 import torch
 from spinup import EpochLogger
 from spinup.utils.logx import restore_tf_graph
+from matplotlib import pyplot as plt
+from IPython import display as ipd
 
 
 def load_policy_and_env(fpath, itr='last', deterministic=False):
@@ -118,8 +120,11 @@ def run_policy(env, get_action, max_ep_len=None, num_episodes=100, render=True):
     o, r, d, ep_ret, ep_len, n = env.reset(), 0, False, 0, 0, 0
     while n < num_episodes:
         if render:
-            env.render()
-            time.sleep(1e-3)
+#             env.render('human')
+            ipd.clear_output(wait=True)
+            plt.imshow(env.render(mode='rgb_array'))
+            plt.show()
+#             time.sleep(0.001)
 
         a = get_action(o)
         o, r, d, _ = env.step(a)
